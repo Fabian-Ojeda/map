@@ -11,39 +11,31 @@ const myMap = ({points}) => {
                     attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
                     url="https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmFiaWFuLW9qZWRhIiwiYSI6ImNsMDVxd2hlZDA1bWkzaW56d29mZjZqcjIifQ.Rz31zbVrArZakcIPB0uqzw"
                 />
-                <Marker position={[6.257970, -75.591267]}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
+
                 <LayerGroup>
                     {
                         points.map((info) => {
-                            var color = info.gravedad;
-                            if (color=='Alta'){
+                            var color = info.color;
+                            if (color=='rojo'){
                                 color='red'
-                            }else if (color=='Media'){
+                            }else if (color=='amarillo'){
                                 color='yellow'
                             }else {
                                 color='green'
                             }
                             return (
-                            <Circle
-                                center={[info.Latitud, info.Longitud]}
-                                pathOptions={{ color: color, fillColor: color }}
-                                radius={info.Radio}
-                            />
+                                <Circle
+                                    //key={info._id}
+                                    center={[info.centroid.lat, info.centroid.lon]}
+                                    pathOptions={{ color: color, fillColor: color }}
+                                    radius={(info.radius*1609)}
+                                />
                             )
                         })
                     }
 
                 </LayerGroup>
-                <Polyline
-                    positions={[
-                        [6.252429, -75.612216],
-                        [6.237215, -75.544867],
-                    ]}
-                />
+
             </MapContainer>
         </div>)
 }
